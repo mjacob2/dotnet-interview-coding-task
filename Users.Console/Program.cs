@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Users.Application;
 using Users.Console;
@@ -8,7 +7,7 @@ using Users.Persistence;
 var services = new ServiceCollection();
 services.AddDbContext<UserContext>(options =>
 {
-    options.UseInMemoryDatabase("users");
+    options.UseSqlite(@"Data Source=Users.db;");
 });
 
 services.AddTransient<UserUpdatesProcessor>();

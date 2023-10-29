@@ -6,8 +6,9 @@ namespace Users.Console;
 
 internal class Seed
 {
-    private const int RowsInDatabase = 2000;
-    private const int ChangeFileSizeInLines = 5004;
+    private const int RowsInDatabase = 1999;
+    private const int ChangeFileSizeInLines = 1004;
+    private const int ErrorLine = 404;
 
     private readonly UserContext _context;
     private readonly string _filePath;
@@ -30,6 +31,9 @@ internal class Seed
             .RuleFor(x => x.Address, f => f.Address.FullAddress());
 
         // populate database
+        await _context.Database.EnsureDeletedAsync();
+        await _context.Database.EnsureCreatedAsync();
+
         var users = userFaker.Generate(RowsInDatabase);
         _context.AddRange(users);
         await _context.SaveChangesAsync();
@@ -48,6 +52,11 @@ internal class Seed
             bool insert = random.Next(2) == 1;
 
             UserProfile user = userFaker.Generate();
+            if (i == ErrorLine)
+            {
+                user.Email = null;
+                user.FirstName = new Faker().Random.String(length: 120, 'a', 'z');
+            }
 
             user.Id = insert 
                 ? ++maxExistingId 
