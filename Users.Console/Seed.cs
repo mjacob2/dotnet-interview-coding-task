@@ -7,7 +7,7 @@ namespace Users.Console;
 internal class Seed
 {
     private const int RowsInDatabase = 1999;
-    private const int ChangeFileSizeInLines = 1004;
+    private const int ChangeFileSizeInLines = 10;
     private const int ErrorLine = 404;
 
     private readonly UserContext _context;
