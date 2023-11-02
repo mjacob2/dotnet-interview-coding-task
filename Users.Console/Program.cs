@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Users.Application;
+using Users.Application.Services.StreamValidator;
 using Users.Console;
 using Users.Persistence;
 
@@ -11,6 +12,7 @@ services.AddDbContext<UserContext>(options =>
 });
 
 services.AddTransient<UserUpdatesProcessor>();
+services.AddTransient<IStreamValidator, StreamValidator>();
 
 IServiceProvider sp = services.BuildServiceProvider();
 
